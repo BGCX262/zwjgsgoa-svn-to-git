@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.1.dtd">
+    
+ <struts>
+ <constant name="struts.objectFactory" value="org.apache.struts2.spring.StrutsSpringObjectFactory" />
+
+ <package name="default" extends="struts-default">
+ 	<!-- 配置全局的result 以供异常机制调用 -->
+ 	<global-results>
+ 		<result name="exception">zwjgsgView/exception.jsp</result>
+ 	</global-results>
+ 	<!-- 配置全局的异常处理信息，只要ACTION抛出对应异常就会返回相应的result -->
+ 	<global-exception-mappings>
+ 		<exception-mapping result="exception" exception="java.sql.SQLException"></exception-mapping>
+ 	</global-exception-mappings>
+ 	
+ 	<action name="*Operate" class="userBaseOperateAction" method = "{1}">
+ 		<exception-mapping result="exception" exception="com.zwjgsgoa.exception.ZGException"></exception-mapping>
+ 		<result name = "success">zwjgsgView/welcome.jsp</result>
+ 		<result name = "error">zwjgsgView/exception.jsp</result>
+ 	</action>
+ 	
+ 	<action name="*File" class = "fileOperateAction" method = "{1}">
+ 		<param name="savePath">/</param>
+ 		<exception-mapping result="exception" exception="com.zwjgsgoa.exception.ZGException"></exception-mapping>
+ 		<result name = "success">zwjgsgView/welcome.jsp</result>
+ 		<result name = "error">zwjgsgView/exception.jsp</result>
+ 	</action>
+ </package>
+
+</struts>
